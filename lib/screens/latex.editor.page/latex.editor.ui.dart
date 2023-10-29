@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latex_editor/screens/components/bottom.sheet.button.dart';
@@ -16,6 +17,8 @@ class LatexEditorPage extends StatefulWidget {
 
 class _LatexEditorPageState extends State<LatexEditorPage> {
   final TextEditingController _controller = TextEditingController();
+  final CodeController _codeController = CodeController();
+
   @override
   Widget build(BuildContext context) {
     log("<---------------------------Build--------------------------->");
@@ -29,7 +32,7 @@ class _LatexEditorPageState extends State<LatexEditorPage> {
           IconButton(
             splashRadius: 25,
             onPressed: () {
-              log("Load File");
+              // log("Load File");
             },
             icon: const Icon(
               Icons.file_open_outlined,
@@ -46,7 +49,7 @@ class _LatexEditorPageState extends State<LatexEditorPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Enter Text Here",
+                  "Enter Code Here",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -55,9 +58,9 @@ class _LatexEditorPageState extends State<LatexEditorPage> {
                 Consumer<LatexEditorProvider>(builder: (context, value, child) {
                   return GestureDetector(
                     onTap: () {
-                      _controller.clear();
+                      _codeController.clear();
                       value.setLatexCode("");
-                      log("Reload");
+                      // log("Reload");
                     },
                     child: const Icon(
                       Icons.clear,
@@ -70,16 +73,36 @@ class _LatexEditorPageState extends State<LatexEditorPage> {
               height: 10,
             ),
             Expanded(
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  hintText: 'Enter Latex Code Here',
-                  border: InputBorder.none,
+              child: CodeField(
+                controller: _codeController,
+                expands: true,
+                // wrap: true,
+                lineNumberStyle: const LineNumberStyle(
+                  width: 35,
+                  margin: 5,
+                  textAlign: TextAlign.center,
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
+                textStyle: const TextStyle(
+                  fontFamily: 'SourceCode',
+                  color: Colors.black,
+                ),
+                background: Colors.transparent,
               ),
             ),
+            // Expanded(
+            //   child: TextField(
+            //     controller: _controller,
+            //     decoration: const InputDecoration(
+            //       hintText: 'Enter Latex Code Here',
+            //       border: InputBorder.none,
+            //     ),
+            //     keyboardType: TextInputType.multiline,
+            //     maxLines: null,
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -89,8 +112,8 @@ class _LatexEditorPageState extends State<LatexEditorPage> {
           builder: (context, value, child) {
             return BottomNavButton(
               btnFunction: () {
-                value.setLatexCode(_controller.text);
-                log(value.latexCode);
+                value.setLatexCode(_codeController.text);
+                // log(value.latexCode);
                 Navigator.of(context).push(
                   CupertinoPageRoute(
                     builder: (context) => const LatexViewPage(),
