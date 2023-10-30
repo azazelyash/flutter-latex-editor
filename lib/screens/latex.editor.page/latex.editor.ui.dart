@@ -82,7 +82,7 @@ class _LatexEditorPageState extends State<LatexEditorPage> {
                   margin: 5,
                   textAlign: TextAlign.center,
                   textStyle: TextStyle(
-                    color: Colors.black,
+                    color: Colors.black54,
                   ),
                 ),
                 textStyle: const TextStyle(
