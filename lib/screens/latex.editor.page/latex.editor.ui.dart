@@ -16,7 +16,6 @@ class LatexEditorPage extends StatefulWidget {
 }
 
 class _LatexEditorPageState extends State<LatexEditorPage> {
-  final TextEditingController _controller = TextEditingController();
   final CodeController _codeController = CodeController();
 
   @override
